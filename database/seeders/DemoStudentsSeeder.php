@@ -18,8 +18,8 @@ class DemoStudentsSeeder extends Seeder
 {
     public function run(): void
     {
-        if (! app()->environment('local', 'testing')) {
-            throw new RuntimeException('Os alunos de demonstração só podem ser criados nos ambientes local e testing.');
+        if (! app()->environment('local', 'testing') && ! config('ibadeg.seed_demo')) {
+            throw new RuntimeException('Para criar alunos fictícios em produção, habilite IBADEG_SEED_DEMO explicitamente.');
         }
 
         $administrator = User::where('role', 'admin')->where('status', 'approved')->firstOrFail();
