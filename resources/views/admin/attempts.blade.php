@@ -1,0 +1,6 @@
+@extends('layouts.app')
+@section('title','Provas e correções')
+@section('page_title','Provas e correções')
+@section('content')
+<div class="page-heading heading-row"><div><span class="eyebrow">AVALIAÇÕES DE APRENDIZAGEM</span><h1>Provas e correções</h1><p>Todas as provas enviadas, com respostas, notas e histórico de revisão.</p></div><div class="actions"><a class="btn secondary" href="{{ route('admin.export.pdf') }}"><x-icon name="download" /> Histórico PDF</a><a class="btn secondary" href="{{ route('admin.export') }}">Histórico CSV</a></div></div><section class="card"><form method="get" class="filters"><select class="input" name="status" aria-label="Situação"><option value="">Todas as situações</option><option value="pending_review" @selected(request('status')==='pending_review')>Aguardando correção</option><option value="graded" @selected(request('status')==='graded')>Corrigidas</option></select><select class="input" name="subject" aria-label="Disciplina"><option value="">Todas as disciplinas</option>@foreach($subjects as $subject)<option value="{{ $subject->id }}" @selected(request('subject')==$subject->id)>{{ sprintf('%02d',$subject->number) }} · {{ $subject->title }}</option>@endforeach</select><button class="btn secondary">Filtrar</button></form>@include('partials.attempts',['showStudent'=>true]){{ $attempts->links() }}</section>
+@endsection
